@@ -408,7 +408,7 @@
     line-height: 1;
   }
   .wordmark .mk {
-    color: var(--neon);
+    color: var(--ink);
   }
   @media (max-width: 1100px) {
     .hd-nav {
@@ -835,23 +835,15 @@
   .stmt .stmt-mark {
     position: absolute;
     left: 50%;
-    top: 0;
-    width: 560px;
-    height: 560px;
-    margin-left: -280px;
+    top: 40px;
+    width: 460px;
+    height: 460px;
+    margin-left: -230px;
     pointer-events: none;
-    filter: drop-shadow(0 0 14px rgba(200, 255, 46, 0.55));
-  }
-  .stmt .stmt-mark path,
-  .stmt .stmt-mark circle {
-    fill: none;
-    stroke: var(--neon);
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: var(--len, 2000);
-    stroke-dashoffset: calc(var(--len, 2000) * (1 - var(--draw, 1)));
-    opacity: 0.85;
+    background: var(--neon);
+    opacity: calc(0.08 + 0.17 * var(--draw, 1));
+    transform: scale(calc(0.9 + 0.1 * var(--draw, 1)));
+    filter: drop-shadow(0 0 30px rgba(200, 255, 46, 0.6));
   }
   .stmt p {
     position: relative;
@@ -868,9 +860,9 @@
       padding: 90px 0 60px;
     }
     .stmt .stmt-mark {
-      width: 320px;
-      height: 320px;
-      margin-left: -160px;
+      width: 260px;
+      height: 260px;
+      margin-left: -130px;
     }
   }
 
@@ -1734,8 +1726,8 @@
   .stmt .w {
     opacity: 1 !important;
   }
-  .stmt .stmt-mark path,
-  .stmt .stmt-mark circle {
-    stroke-dashoffset: 0 !important;
+  .stmt .stmt-mark {
+    opacity: 0.25 !important;
+    transform: none !important;
   }
 }

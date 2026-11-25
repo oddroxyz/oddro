@@ -1,17 +1,16 @@
 /*
- * Oddro's mark (placeholder until the owner's files arrive): a ring, the order, with a check cut into it, your approval.
- * Drawn inline with currentColor; the same geometry renders the favicon and share image (referensi/tools/make-assets.mjs).
+ * Oddro's mark: the owner's logo (25 Nov 2026, assets/ODDRO.png), trimmed to public/brand/mark.webp by
+ * referensi/tools/apply-owner-assets.mjs. Drawn as a CSS mask filled with currentColor (white in the header like the owner's banner,
+ * neon where the page asks). Bump ?v= when the file changes so cached copies are replaced.
  */
+export const MARK_URL = "/brand/mark.webp?v=67e38522";
+
 export function MarkGlyph({ size = 22, className = "" }: { size?: number; className?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" data-testid="brand-mark" className={`mk shrink-0 ${className}`}>
-      <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" strokeWidth="4" />
-      <path d="M10.6 16.4l3.6 3.6 7.4-7.6" fill="none" stroke="currentColor" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  const mask = `url(${MARK_URL}) center / contain no-repeat`;
+  return <span aria-hidden="true" data-testid="brand-mark" className={`mk block shrink-0 bg-current ${className}`} style={{ width: size, height: size, WebkitMask: mask, mask }} />;
 }
 
-/** Wordmark: the mark + the name in the wide display face, like the reference's logotype. */
+/** Wordmark: the owner's mark + the name in the wide display face. */
 export function Wordmark({ size = 26 }: { size?: number }) {
   return (
     <span className="wordmark" style={{ fontSize: size }}>

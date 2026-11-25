@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { MARK_URL } from "@/components/site/Mark";
 
 /*
  * The reference's statement: uppercase display text lit word by word as it scrolls through the viewport (unlit words sit at
- * 20 % opacity), over a large outline that draws itself in a glow. Here the outline is Oddro's ring and check. Without JavaScript,
+ * 20 % opacity), over the owner's mark, which rises out of the dark in a neon glow as the block scrolls in. Without JavaScript,
  * with reduced motion or in a hidden tab every word is lit and the outline is complete.
  */
 const TEXT =
@@ -17,7 +18,7 @@ export function Statement() {
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const words = [...el.querySelectorAll<HTMLElement>(".w")];
-    const svg = el.querySelector<SVGElement>(".stmt-mark");
+    const svg = el.querySelector<HTMLElement>(".stmt-mark");
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -52,10 +53,7 @@ export function Statement() {
   }, []);
   return (
     <section className="stmt" ref={ref} data-testid="statement">
-      <svg className="stmt-mark" viewBox="0 0 320 320" aria-hidden="true">
-        <circle cx="160" cy="160" r="128" style={{ "--len": 805 } as React.CSSProperties} />
-        <path d="M100 166l40 40 84-86" style={{ "--len": 180 } as React.CSSProperties} />
-      </svg>
+      <span className="stmt-mark" aria-hidden="true" style={{ WebkitMask: `url(${MARK_URL}) center / contain no-repeat`, mask: `url(${MARK_URL}) center / contain no-repeat` }} />
       <p className="display statement">
         {TEXT.split(" ").map((w, i) => (
           <span key={i}>

@@ -34,7 +34,7 @@ export default function TokenPage() {
         <section className="panel glow panel-pad grid content-start gap-4" data-testid="token-panel">
           <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element -- small versioned logo; next/image refuses the ?v= query */}
-            <img src="/brand/mark-tile.webp?v=f9ddcec9" alt={`${BRAND.tokenName} logo`} width={56} height={56} className="rounded-[14px]" />
+            <img src="/brand/mark-tile.webp?v=c7904a58" alt={`${BRAND.tokenName} logo`} width={56} height={56} className="rounded-[14px]" />
             <div>
               <p className="text-[18px] font-medium">{BRAND.tokenName}</p>
               <p className="num text-[13px] text-[var(--muted)]">
