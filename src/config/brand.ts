@@ -22,7 +22,7 @@ const SLUG = "oddro";
 const TICKER = "ODDRO";
 const DOMAIN = "oddro.xyz";
 /** X account of the project (the owner's handle, exactly as written in the order). */
-const X_HANDLE = "oddro";
+const X_HANDLE = "oddroxyz";
 
 export const BRAND = {
   name: NAME,
@@ -41,8 +41,8 @@ export const BRAND = {
   description: `${NAME} is an order review desk for a stock-token buying agent on Robinhood Chain. You write one periodic-buy strategy for one supported asset; Oddro turns it into rules, asks when something is unclear, and shows every order the agent proposes as a review card: the rule that fired, the asset with its on-chain proof, the amount, the estimated cost, and a Proceed or Hold verdict with reasons. Nothing is bought until you approve that exact ticket on chain. Non-custodial: funds stay in your wallet.`,
   x: `https://x.com/${X_HANDLE}`,
   xHandle: `@${X_HANDLE}`,
-  // Public source repository: none yet (link hidden until it exists).
-  github: "https://github.com",
+  // Public source repository (open source, MIT).
+  github: "https://github.com/oddroxyz/oddro",
   ca: CA,
 } as const;
 
