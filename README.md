@@ -100,7 +100,7 @@ The site offers to add it when you connect.
 
 ## Token
 
-$ODDRO is the community token of Oddro on Robinhood Chain. Contract address: announced on https://oddro.xyz at launch. It has no promised value. Its planned use, higher desk limits and alerts, is not built yet; the desk never needs it.
+$ODDRO is the community token of Oddro on Robinhood Chain. Contract address: announced on https://oddro.xyz at launch. It has no promised value. Its token features, higher desk limits and alerts, are concepts and not built yet; the desk never needs it.
 
 ## Deploy your own
 

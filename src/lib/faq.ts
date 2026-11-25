@@ -24,7 +24,7 @@ export const FAQ: Faq[] = [
   },
   {
     q: "Do I need the token?",
-    a: "No. The desk, the review cards, the queue and the contract work without it, and the token is not live yet. Its planned use (higher desk limits, alerts) is a concept and labelled as one.",
+    a: "No. The desk, the review cards, the queue and the contract work without it, and the token is not live yet. Its token features (higher desk limits, alerts) are concepts and labelled as such.",
   },
   {
     q: "Is Oddro connected to Robinhood?",

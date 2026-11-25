@@ -7,7 +7,7 @@ import { breadcrumbLd, pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   path: "/token",
   title: `${BRAND.symbol}: the token, and what it is not`,
-  description: `${BRAND.symbol} on ${BRAND.chainName}: contract address, launch status and planned utility. The Oddro desk works without it.`,
+  description: `${BRAND.symbol} on ${BRAND.chainName}: contract address, launch status and token features. The Oddro desk works without it.`,
 });
 
 export default function TokenPage() {
@@ -17,7 +17,7 @@ export default function TokenPage() {
     <>
       <JsonLd data={breadcrumbLd([{ name: BRAND.symbol, path: "/token" }])} />
       <PageHead eyebrow={`${BRAND.tokenName} · ${BRAND.chainName}`} title={`${BRAND.symbol}`}>
-        <p>A memecoin with planned utility. The desk, the review cards, the queue and the contract never need it.</p>
+        <p>The community token of Oddro. The desk, the review cards, the queue and the contract never need it.</p>
       </PageHead>
       <div className="wrap grid gap-8 pb-24 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <section className="panel glow panel-pad grid gap-4" data-testid="token-panel">
@@ -47,7 +47,7 @@ export default function TokenPage() {
           </div>
         </section>
         <section className="panel panel-pad grid content-start gap-3">
-          <h2 className="display text-[24px]">Planned utility</h2>
+          <h2 className="display text-[24px]">Token features</h2>
           {[
             ["Higher desk limits: more desks and assets per wallet on the hosted queue", "Concept"],
             ["Alerts when a ticket waits for you (email or push)", "Concept"],
