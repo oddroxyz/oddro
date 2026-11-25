@@ -1,4 +1,6 @@
 /* Questions answered on the method page (and as FAQ structured data). Every answer is true of the site as built. */
+import { TOKEN } from "@/config/brand";
+
 export type Faq = { q: string; a: string };
 
 export const FAQ: Faq[] = [
@@ -24,7 +26,8 @@ export const FAQ: Faq[] = [
   },
   {
     q: "Do I need the token?",
-    a: "No. The desk, the review cards, the queue, the contract and the alerts work without it. Holding at least 0.1 % of the supply (read on chain after you sign one gasless message) gives more hosted desks, assets and saved strategies. The token is not live yet, so that tier unlocks at launch.",
+    a: "No. The desk, the review cards, the queue, the contract and the alerts work without it. Holding at least 0.1 % of the supply (read on chain after you sign one gasless message) gives more hosted desks, assets and saved strategies." +
+      (TOKEN.isLive ? " The token is live, so the tier is active now." : " The token is not live yet, so that tier unlocks at launch."),
   },
   {
     q: "How do alerts work?",

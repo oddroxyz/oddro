@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BRAND, CHAIN } from "@/config/brand";
+import { BRAND, CHAIN, TOKEN } from "@/config/brand";
 import { CONTRACTS, deskLive } from "@/config/contracts";
 import { Hero } from "@/components/home/Hero";
 import { Statement } from "@/components/home/Statement";
@@ -182,7 +182,7 @@ const STATUS: { f: string; s: "Prototype" | "Concept"; n: string }[] = [
   { f: "Execute an approved ticket (USDG → stock token)", s: "Prototype", n: "Uniswap v3 SwapRouter02, output forced to you; tested on a Robinhood Chain fork." },
   { f: "Robinhood Chain Testnet", s: "Concept", n: "Network proven (chain 46630), but the router, USDG and stock tokens do not exist there." },
   { f: "Alerts: bell inbox + browser notifications", s: "Prototype", n: "Free for every connected wallet: ticket waiting, expiring, executed or not, desk paused." },
-  { f: `Hosted desks; more room at 0.1 % of ${BRAND.symbol} supply`, s: "Prototype", n: "Sign one message, the server reads your balance on chain. Holder tier unlocks at launch." },
+  { f: `Hosted desks; more room at 0.1 % of ${BRAND.symbol} supply`, s: "Prototype", n: `Sign one message, the server reads your balance on chain. ${TOKEN.isLive ? "Holder tier is active." : "Holder tier unlocks at launch."}` },
 ];
 
 export default function Home() {
