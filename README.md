@@ -11,17 +11,19 @@ This repository is the working code behind https://oddro.xyz.
 - **What runs today.** The desk (`/desk`): a plain-text strategy reader (fixed patterns, no AI model) with clarifying questions, the rule check, a run of four scenarios (within budget, over the cap, wrong asset, not approved yet) that become review cards, and an approval queue with approve / reject / execute in practice mode. Practice mode needs no wallet and no token. `/history` reads the desk contract's events; `/method` lists every rule, source and limit.
 - **What reads live data.** Block, gas price and Chainlink ETH/USD; for each supported stock token: its on-chain identity proof (vetted list, proxy code hash, beacon slot, minted supply), its Chainlink price with age, its deepest Uniswap v3 pool against USDG, and a QuoterV2 quote for the order size. All from Robinhood Chain through its RPC; nothing failed is cached.
 - **The contract.** `OddroOrderDesk` enforces the same rules on chain: the agent proposes tickets, the owner approves (bound to the ticket hash) or rejects each one, and an approved ticket can execute through the Uniswap v3 SwapRouter02 with the output forced to the owner. It is **not deployed yet**; until it is, every approval on the site is practice.
-- **Planned, not built.** Robinhood Chain Testnet support (the network answers, but the router, USDG and the stock tokens do not exist there) and the $ODDRO utility (higher desk limits, alerts).
+- **Token features (Prototype).** Alerts are free for every connected wallet: a bell inbox computed from the desk contract (ticket waiting, expiring, executed or not, desk paused) and browser notifications while a tab is open. Hosted desks and saved strategies live on the server after you sign one gasless Sign-In with Ethereum message; a wallet holding at least 0.1 % of the $ODDRO supply (read on chain) gets more room. Before launch the holder tier shows "Unlocks at launch".
+- **Planned, not built.** Robinhood Chain Testnet support (the network answers, but the router, USDG and the stock tokens do not exist there).
 - **What nothing here claims.** No outside security review of the contract yet (use small amounts first), no safety guarantee, no advice, and no promised value for $ODDRO. A ticket that passes every rule is not a reason to buy.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
-| `src/app/` | Pages (`/`, `/desk`, `/history`, `/method`, `/token`, localhost-only `/deploy`) and API routes (`/api/chain`, `/api/assets`, `/api/quote`, `/api/activity`, `/api/rpc`). |
+| `src/app/` | Pages (`/`, `/desk`, `/history`, `/method`, `/token`, localhost-only `/deploy`) and API routes (`/api/chain`, `/api/assets`, `/api/quote`, `/api/activity`, `/api/rpc`, `/api/holder`, `/api/hosted`). |
 | `src/components/` | Interface: home sections, the desk (review cards, queue, on-chain desk), history, wallet dialog. |
 | `src/config/` | `brand.ts` (name, ticker, token address, links), `contracts.ts` (deployed desk address), `dex.ts` (chain addresses read), `assets.ts` (supported stock tokens). |
 | `src/lib/desk/` | The rule engine: strategy reader, reason bits (mirroring the contract), review checks, scenarios. |
+| `src/lib/holder/` | Holder session (EIP-4361 message check), tier math (0.1 % of supply) and hosted-desk quotas. `src/config/quota.ts` holds the numbers. |
 | `src/lib/server/` | Chain reads: asset proofs and prices, quotes, desk activity from logs, relay and rate limits. |
 | `contracts/` | Solidity sources (`src/OddroOrderDesk.sol`, `src/OddroTicketMath.sol`) and Foundry tests (`test/`). |
 | `examples/` | `agent.mjs`: an example agent that checks with the contract, then proposes; it can never approve. |
@@ -49,7 +51,7 @@ forge test --match-contract Fork --fork-url https://rpc.mainnet.chain.robinhood.
 
 ### What was checked for this snapshot
 
-2026-11-25 (UTC), Node.js 20+, forge 1.x: `npm run typecheck` exit 0; `npm test` 35 pass / 0 fail; `next build` 20 routes; `forge test` 45 passed (OddroOrderDeskTest 42 unit and fuzz tests at 1,024 runs, OddroOrderDeskInvariantTest 3 invariants at 64 runs x 48 calls); fork suite OddroForkTest 5 passed against Robinhood Chain mainnet state (a full propose, approve and execute through the real SwapRouter02 and NVDA/USDG pool). Browser end-to-end run on a local fork with chain id 4663 (injected wallets, the example agent, verify-deployment): 8 passed / 0 failed (wallet dialog and add-chain, header fit at 360/390/1440, practice desk, opening a desk, the agent refused for wrong asset and over cap, manual approval in the browser, execution through the real router to the owner, history from logs, gap and pause), plus verify-deployment MATCH for the fork deployment and MISMATCH for a wrong address. Not run: a deployment on the live network (the owner deploys).
+2026-11-25 (UTC), Node.js 20+, forge 1.x: `npm run typecheck` exit 0; `npm test` 42 pass / 0 fail; `next build` 22 routes; `forge test` 45 passed (OddroOrderDeskTest 42 unit and fuzz tests at 1,024 runs, OddroOrderDeskInvariantTest 3 invariants at 64 runs x 48 calls); fork suite OddroForkTest 5 passed against Robinhood Chain mainnet state (a full propose, approve and execute through the real SwapRouter02 and NVDA/USDG pool). Browser end-to-end run on a local fork with chain id 4663 (injected wallets, the example agent, a test ERC-20 standing in for $ODDRO, verify-deployment): 11 passed / 0 failed (wallet dialog and add-chain, header fit at 360/390/1440, practice desk, opening a desk, the agent refused for wrong asset and over cap, the bell and a browser notification after the agent's proposal, manual approval in the browser, execution through the real router to the owner, history from logs, gap and pause, a wallet under 0.1 % stays Free and one over is Holder, the free tier's third hosted desk refused by the server), plus verify-deployment MATCH for the fork deployment and MISMATCH for a wrong address. Not run: a deployment on the live network (the owner deploys).
 
 ## Look at the site
 
@@ -100,7 +102,18 @@ The site offers to add it when you connect.
 
 ## Token
 
-$ODDRO is the community token of Oddro on Robinhood Chain. Contract address: announced on https://oddro.xyz at launch. It has no promised value. Its token features, higher desk limits and alerts, are concepts and not built yet; the desk never needs it.
+$ODDRO is the community token of Oddro on Robinhood Chain. Contract address: announced on https://oddro.xyz at launch. It has no promised value. The desk never needs it.
+
+Token features:
+
+| Feature | Free (any wallet) | Holder (≥ 0.1 % of supply) |
+|---|---|---|
+| Hosted desks | 2 | 12 |
+| Different assets across hosted desks | 2 | 12 |
+| Saved strategies | 3 | 30 |
+| Alerts (bell + browser notifications) | yes | yes |
+
+How the check works: the wallet signs one EIP-4361 message (no gas) naming the site, chain 4663, an expiry of at most 4 hours and a random nonce. The browser keeps it in the tab and sends it with each hosted-desk request; the server checks the signature, the domain and URI against a fixed allowlist, the chain, the expiry and that it was not signed out, then reads `balanceOf` and `totalSupply` on chain (cached at most 30 s). Holder = balance × 1,000 ≥ supply. Quotas are enforced on the server. Smart-contract wallets cannot sign in yet (EOA only). No fee discounts, rewards or revenue share.
 
 ## Deploy your own
 
@@ -112,7 +125,7 @@ $ODDRO is the community token of Oddro on Robinhood Chain. Contract address: ann
 | `ROBINHOOD_RPC_URL` | Server reads and log scans | `https://…` RPC URL that serves `eth_getLogs` |
 | `NEXT_PUBLIC_ROBINHOOD_RPC_URL` | Browser RPC override | `https://…` (public) |
 | `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect in the wallet dialog | 32 hex characters |
-| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Shared rate-limit store | REST URL and token |
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Shared store: rate limits, hosted desks, signed-out sessions. Without it they live in one instance's memory (bounded; the page says saved data may be lost on restart) | REST URL and token |
 
 3. Point the domain at the host. Check `/` (200), `/api/chain` (JSON with a block number), `/api/assets` (supported assets with `"proven": true`) and that `/deploy` is 404 on the public host.
 4. Contract: deploy `OddroOrderDesk` with the SwapRouter02 address as its only constructor argument (the localhost `/deploy` page does this from your wallet), paste the address, block and transaction into `src/config/contracts.ts`, then run `npm run verify-deployment`.

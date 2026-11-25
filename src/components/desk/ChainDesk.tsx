@@ -14,6 +14,9 @@ import { BIT_WORDS, bitNames } from "@/lib/desk/bits";
 import { toDesk, type Strategy } from "@/lib/desk/strategy";
 import { explain, read, simulate, waitForReceipt } from "@/lib/client";
 import type { Activity, TicketView } from "@/lib/server/activity";
+import { failedTxAlert, type Alert } from "@/lib/alerts";
+import { LOCAL_ALERTS } from "@/components/holder/AlertBell";
+import { useLocalStore } from "@/components/wallet/useLocalStore";
 
 /*
  * The on-chain desk. Owner: open a desk from the strategy, allow USDG, then approve (bound to the ticket hash), reject or
@@ -39,6 +42,7 @@ export function ChainDesk({ strategy }: { strategy: Strategy }) {
   const [msg, setMsg] = useState<string | null>(null);
   const [lastTx, setLastTx] = useState<string | null>(null);
   const [allow, setAllow] = useState<bigint | null>(null);
+  const [, setLocalAlerts] = useLocalStore<Alert[]>(LOCAL_ALERTS, []);
 
   const load = useCallback(
     async (fresh = false) => {
@@ -88,6 +92,7 @@ export function ChainDesk({ strategy }: { strategy: Strategy }) {
       setMsg(`${label}: sent, waiting for the block…`);
       const rc = await waitForReceipt(hash);
       setMsg(rc.ok ? `${label}: confirmed in block ${rc.blockNumber}.` : `${label}: the transaction reverted.`);
+      if (!rc.ok) setLocalAlerts((l) => [failedTxAlert(label, hash, "The transaction reverted on chain; nothing changed.", Math.floor(Date.now() / 1000)), ...l].slice(0, 50));
       await load(true);
     } catch (e) {
       setMsg(`${label}: ${explain(e)}`);

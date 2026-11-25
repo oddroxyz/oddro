@@ -185,7 +185,8 @@ export default function MethodPage() {
               ["OddroOrderDesk contract and the on-chain queue", "Prototype"],
               ["Execution through SwapRouter02 (fork-tested)", "Prototype"],
               ["Robinhood Chain Testnet", "Concept"],
-              [`${BRAND.symbol} utility: higher limits, alerts`, "Concept"],
+              ["Alerts (bell + browser notifications), free", "Prototype"],
+              [`Hosted desks with the ${BRAND.symbol} holder tier (0.1 % of supply)`, "Prototype"],
             ].map(([f, s]) => (
               <div key={f} className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] pb-2">
                 <span>{f}</span>

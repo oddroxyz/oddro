@@ -8,6 +8,7 @@ import { NAV } from "@/config/nav";
 import { Wordmark } from "@/components/site/Mark";
 import { CloseIcon } from "@/components/site/Icons";
 import { NavWallet } from "@/components/wallet/WalletButton";
+import { AlertBell } from "@/components/holder/AlertBell";
 import { CaBox } from "@/components/site/CaCopy";
 import { useFocusTrap } from "@/components/site/useFocusTrap";
 
@@ -30,6 +31,7 @@ export function SiteHeader() {
             ))}
           </nav>
           <div className="ml-auto flex min-w-0 items-center gap-2 min-[1101px]:ml-0">
+            <AlertBell />
             <NavWallet label="Connect wallet" />
             <button type="button" className="rq-iconbtn min-[1101px]:hidden" aria-label="Open the menu" aria-expanded={open} onClick={() => setOpen(true)} data-testid="menu-open">
               <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">

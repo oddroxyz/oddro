@@ -24,7 +24,11 @@ export const FAQ: Faq[] = [
   },
   {
     q: "Do I need the token?",
-    a: "No. The desk, the review cards, the queue and the contract work without it, and the token is not live yet. Its token features (higher desk limits, alerts) are concepts and labelled as such.",
+    a: "No. The desk, the review cards, the queue, the contract and the alerts work without it. Holding at least 0.1 % of the supply (read on chain after you sign one gasless message) gives more hosted desks, assets and saved strategies. The token is not live yet, so that tier unlocks at launch.",
+  },
+  {
+    q: "How do alerts work?",
+    a: "Connect a wallet and the bell shows what needs you: a ticket waiting for approval, a ticket expiring soon, an execution done, an approved ticket that was not executed in time, a paused desk. Click Enable to also get browser notifications while a tab of Oddro is open. Free for everyone; nothing is sent by email or push when no tab is open.",
   },
   {
     q: "Is Oddro connected to Robinhood?",

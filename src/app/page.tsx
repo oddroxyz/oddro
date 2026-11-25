@@ -181,7 +181,8 @@ const STATUS: { f: string; s: "Prototype" | "Concept"; n: string }[] = [
   { f: "Approval queue: manual approve / reject", s: "Prototype", n: "Practice mode in the browser; on chain once the desk contract is deployed." },
   { f: "Execute an approved ticket (USDG → stock token)", s: "Prototype", n: "Uniswap v3 SwapRouter02, output forced to you; tested on a Robinhood Chain fork." },
   { f: "Robinhood Chain Testnet", s: "Concept", n: "Network proven (chain 46630), but the router, USDG and stock tokens do not exist there." },
-  { f: `${BRAND.symbol} utility (higher desk limits, alerts)`, s: "Concept", n: "Planned only. The desk never needs the token." },
+  { f: "Alerts: bell inbox + browser notifications", s: "Prototype", n: "Free for every connected wallet: ticket waiting, expiring, executed or not, desk paused." },
+  { f: `Hosted desks; more room at 0.1 % of ${BRAND.symbol} supply`, s: "Prototype", n: "Sign one message, the server reads your balance on chain. Holder tier unlocks at launch." },
 ];
 
 export default function Home() {

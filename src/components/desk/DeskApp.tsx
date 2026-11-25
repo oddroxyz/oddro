@@ -8,6 +8,7 @@ import { storageKey } from "@/config/storage";
 import { useAssets, useChain, LiveStrip } from "@/components/home/LiveFacts";
 import { ReviewCard, type CardCost, type CardModel } from "@/components/desk/ReviewCard";
 import { ChainDesk } from "@/components/desk/ChainDesk";
+import { HolderSection } from "@/components/holder/HolderSection";
 import { StatusBadge } from "@/components/site/PageHead";
 import { useLocalStore } from "@/components/wallet/useLocalStore";
 import { BIT_WORDS, bitNames } from "@/lib/desk/bits";
@@ -439,8 +440,9 @@ export function DeskApp() {
           </div>
           <p className="mt-2 text-[14px] text-[var(--muted)]">Four tickets an agent could send. Each is checked with the same rules as the desk contract and becomes a review card. Prices, gas and quotes are live; the desk and the tickets are practice.</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <button type="button" className="btn btn-neon btn-sm" disabled={!ok} onClick={run} data-testid="run-scenarios">
-              Run 4 scenarios
+            {/* The minimum out of every ticket comes from a live quote: wait for the three quotes (they may answer "no quote"). */}
+            <button type="button" className="btn btn-neon btn-sm" disabled={!ok || !q1 || !q2 || !q3} onClick={run} data-testid="run-scenarios">
+              {ok && (!q1 || !q2 || !q3) ? "Reading live quotes…" : "Run 4 scenarios"}
             </button>
             <span className="text-[13px] text-[var(--muted)]">Practice clock: {fmtTime(clock)}</span>
           </div>
@@ -518,6 +520,21 @@ export function DeskApp() {
             <ChainDesk strategy={s.asset ? s : EMPTY} />
           </div>
         </section>
+
+        <div id="hosted" className="scroll-mt-6">
+          <HolderSection
+            desk={{
+              strategy: s,
+              text,
+              queue: queue.map((t) => ({ id: t.id, status: t.status, amountIn: t.amountIn.toString(), hash: t.hash })),
+              onLoad: (st, tx) => {
+                edit({ ...EMPTY, ...st });
+                if (tx) setText(tx);
+                document.getElementById("strategy")?.scrollIntoView({ behavior: "smooth" });
+              },
+            }}
+          />
+        </div>
 
         {/* 5. Results */}
         <section id="results" className="panel panel-pad scroll-mt-6" data-testid="step-results">
