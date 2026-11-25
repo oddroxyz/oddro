@@ -21,7 +21,7 @@ import { ago } from "@/lib/format";
 /*
  * The desk, in five steps on one page: write the strategy (plain text or form), read the rules (with the asset's live proof),
  * run the four scenarios (review cards), decide in the approval queue, and see the results. Practice mode runs entirely in the
- * browser with live prices, gas and quotes; the on-chain desk (ChainDesk) uses the same rules once the contract is deployed.
+ * browser with live prices, gas and quotes; the on-chain desk (ChainDesk) uses the same rules on the live contract.
  */
 
 const EXAMPLE = "Buy $50 of NVDA every Monday, at most $200 a month.";

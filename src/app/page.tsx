@@ -178,7 +178,7 @@ const STATUS: { f: string; s: "Prototype" | "Concept"; n: string }[] = [
   { f: "Plain-text strategy reader + clarifying questions", s: "Prototype", n: "Deterministic patterns in the browser; no AI model." },
   { f: "Rule check with live asset proof", s: "Prototype", n: "Vetted list + proxy code hash + beacon slot + supply, read on chain." },
   { f: "Scenario run and review cards", s: "Prototype", n: "Same checks as the contract; cost from live gas, fee tier and quote." },
-  { f: "Approval queue: manual approve / reject", s: "Prototype", n: "Practice mode in the browser; on chain once the desk contract is deployed." },
+  { f: "Approval queue: manual approve / reject", s: "Prototype", n: "Practice mode in the browser, and on chain with the live, source-verified OddroOrderDesk." },
   { f: "Execute an approved ticket (USDG → stock token)", s: "Prototype", n: "Uniswap v3 SwapRouter02, output forced to you; tested on a Robinhood Chain fork." },
   { f: "Robinhood Chain Testnet", s: "Concept", n: "Network proven (chain 46630), but the router, USDG and stock tokens do not exist there." },
   { f: "Alerts: bell inbox + browser notifications", s: "Prototype", n: "Free for every connected wallet: ticket waiting, expiring, executed or not, desk paused." },
@@ -276,7 +276,7 @@ export default function Home() {
                   ]}
                 />
                 <p className="mt-6 text-[14px] text-[var(--muted)]">
-                  {deskLive() ? `OddroOrderDesk ${CONTRACTS.desk}` : "OddroOrderDesk is not deployed yet; the desk runs in practice mode until it is."}
+                  {deskLive() ? `OddroOrderDesk ${CONTRACTS.desk}` : "OddroOrderDesk address not configured; the desk runs in practice mode."}
                 </p>
               </TabText>
             ),

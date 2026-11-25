@@ -1,20 +1,19 @@
 import { BRAND, isAddress } from "@/config/brand";
 
 /*
- * Oddro's own contract on Robinhood Chain (chain 4663). Not deployed yet: the owner deploys it from the localhost-only /deploy
- * page. Until then every on-chain panel says so and the desk runs in practice mode on sample data.
+ * Oddro's own contract on Robinhood Chain (chain 4663), deployed by the owner on 25 Nov 2026 (block 122888907, 3,411,190 gas).
+ * Check it yourself: `npm run verify-deployment -- --desk <address> --desk-tx <tx>` (values below) prints MATCH.
  *   desk  OddroOrderDesk (+ internal library OddroTicketMath, inlined): desks per owner and agent, order tickets proposed by the
  *         agent, the owner's manual approve / reject per ticket (bound to the ticket hash), checkTicket / checkDecision /
  *         checkExecute reason bits, execute() of an approved ticket through the Uniswap v3 SwapRouter02 with the output forced
  *         to the owner. No admin, no fee, no upgrade, never holds a balance at rest.
- * After the deploy: paste the address, its block and its creation tx below; `npm run verify-deployment -- --desk <a> --desk-tx <tx>`.
  */
 const DEPLOYED = {
-  desk: "TBA",
+  desk: "0xfe0cf0b102d1a04c562234369e27661b514f55fb",
   /** Block of the deployment transaction (log scans start here). */
-  block: 0,
+  block: 122888907,
   /** Creation transaction. */
-  tx: "",
+  tx: "0x29b6c7f2a36fb62fc45a2e905527d12bf0054ddda1eb361df501cb1988d79ea7",
   /** Local tests only (via the override below): a test ERC-20 standing in for $ODDRO on an anvil chain. Empty in production. */
   token: "",
 };

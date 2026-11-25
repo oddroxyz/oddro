@@ -56,7 +56,7 @@ export function SiteFooter() {
                   {deskLive() ? (
                     <a href={`${CHAIN.explorer}/address/${CONTRACTS.desk}`} target="_blank" rel="noreferrer">OddroOrderDesk</a>
                   ) : (
-                    <Link href="/method#contract">Desk contract (not deployed)</Link>
+                    <Link href="/method#contract">Desk contract</Link>
                   )}
                 </li>
               </ul>

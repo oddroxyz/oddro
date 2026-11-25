@@ -73,7 +73,7 @@ export function HistoryApp() {
         </div>
         {!deskLive() ? (
           <p className="note mt-4" data-testid="history-off">
-            The OddroOrderDesk contract is not deployed yet, so there is no on-chain history to read. Once the owner deploys it, this page lists every desk, ticket and decision of a wallet, each with its transaction.
+            No OddroOrderDesk address is configured on this build, so there is no on-chain history to read.
           </p>
         ) : (
           <>

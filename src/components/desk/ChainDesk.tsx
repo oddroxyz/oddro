@@ -74,8 +74,7 @@ export function ChainDesk({ strategy }: { strategy: Strategy }) {
   if (!deskLive()) {
     return (
       <div className="note" data-testid="chain-desk-off">
-        On-chain desk: the OddroOrderDesk contract is not deployed yet, so approvals here are practice. The contract, its tests and the
-        on-chain screens are built; the owner deploys it from the local /deploy page, and then the same queue signs real approvals on {CHAIN.name}.
+        On-chain desk: no OddroOrderDesk address is configured on this build, so approvals here are practice.
       </div>
     );
   }

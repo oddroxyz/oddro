@@ -15,7 +15,7 @@ export function GET() {
     `Supported assets with proofs (JSON): ${BRAND.url}/api/assets`,
     `Live quote (JSON): ${BRAND.url}/api/quote?asset=NVDA&usdg=50`,
     `Desk activity (JSON): ${BRAND.url}/api/activity?owner=<address> or ?agent=<address>`,
-    `OddroOrderDesk: ${deskLive() ? CONTRACTS.desk : "not deployed yet"}`,
+    `OddroOrderDesk (live, source verified): ${deskLive() ? CONTRACTS.desk : "not configured"}`,
     "",
   ];
   return new Response(lines.join("\n"), { headers: { "content-type": "text/plain; charset=utf-8" } });

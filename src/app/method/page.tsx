@@ -131,13 +131,13 @@ export default function MethodPage() {
           <H id="contract">The desk contract</H>
           <div className="panel panel-pad grid gap-3 text-[15px]" data-reveal="">
             <p>
-              <span className="font-medium">OddroOrderDesk</span> (+ internal library OddroTicketMath).{" "}
+              <span className="font-medium">OddroOrderDesk</span> (+ internal library OddroTicketMath), live on {CHAIN.name} since 25 Nov 2026 (block {CONTRACTS.block.toLocaleString("en-US")}), source verified on Blockscout:{" "}
               {deskLive() ? (
                 <a className="elink num" href={explorerAddress(CONTRACTS.desk)} target="_blank" rel="noreferrer">
                   {CONTRACTS.desk}
                 </a>
               ) : (
-                <span className="text-[var(--warn)]">Not deployed yet. The owner deploys it from a localhost-only page; until then the desk runs in practice mode.</span>
+                <span className="text-[var(--warn)]">Address not configured on this build; the desk runs in practice mode.</span>
               )}
             </p>
             <ul className="grid list-disc gap-1.5 pl-5 text-[14px] text-[var(--muted)]">

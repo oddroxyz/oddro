@@ -104,7 +104,7 @@ export function AlertBell() {
               Mark all read
             </button>
           </div>
-          {!deskLive() ? <p className="mt-2 text-[12.5px] text-[var(--muted)]">Alerts start when the desk contract is deployed.</p> : null}
+          {!deskLive() ? <p className="mt-2 text-[12.5px] text-[var(--muted)]">No desk contract is configured on this build.</p> : null}
           <ul className="mt-2 grid max-h-[320px] gap-1 overflow-y-auto">
             {all.length ? (
               all.slice(0, 30).map((a) => (
